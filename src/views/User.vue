@@ -9,17 +9,16 @@
 </template>
 
 <script>
-  export default {
-    props: ['id'],
-        name: "User",
-      computed: {
-        user() {
-          const id = this.id;
-          console.log(this.id)
-          return this.$store.getters.userById(id);
-        }
-      }
+export default {
+  props: ['id'],
+  name: "User",
+  computed: {
+    user() {
+      const id = this.id;
+      return this.$store.getters.userById(id);
     }
+  }
+}
 </script>
 
 <style scoped lang="less">

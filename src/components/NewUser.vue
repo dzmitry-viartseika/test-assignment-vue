@@ -1,7 +1,7 @@
 <template>
-    <div id="new" v-if="modalForm">
-      <form class="form" @submit.prevent="onAddUser">
-        <div class="form__title" v-if="addItem">
+    <div id="new" >
+      <form class="form">
+        <div class="form__title" v-if="Object.keys(this.userEdit).length === 0">
           Add User
         </div>
         <div class="form__title" v-else>
@@ -21,8 +21,14 @@
           <option value="France">France</option>
         </select>
         <div class="submit">
-          <button type="submit" class="btn form__btn" v-if="addItem">ADD</button>
-          <button type="submit" class="btn form__btn" v-else @click="updateUser()">SAVE</button>
+          <button type="button" class="btn form__btn"
+                  @click="onAddUser()"
+                  v-if="Object.keys(this.userEdit).length === 0"
+          >ADD</button>
+          <button type="button" class="btn form__btn"
+                  v-else
+                  @click="onSave()"
+          >SAVE</button>
 
         </div>
       </form>
@@ -46,20 +52,33 @@ function getNewUser() {
 
 
     export default {
-        name: "NewUser",
+      name: "NewUser",
+      props:['userEdit'],
       data() {
         return {
-          user: getNewUser()
+          user: getNewUser(),
+          editStatus: false
         }
       },
-      computed: mapGetters(['users','modalForm','addItem']),
+      computed: {
+      ...mapGetters(['users','addItem']),
+        },
       methods: {
         ...mapMutations(['addUser','openForm','updateUser']),
         onAddUser() {
           this.user.id = this.$store.getters.users.length + 1;
           this.addUser(this.user);
           this.user = getNewUser();
+        },
+        onSave() {
+          this.$store.dispatch('openForm');
         }
+      },
+      beforeMount() {
+          if (Object.keys(this.userEdit).length !== 0) {
+            this.user = this.userEdit;
+            this.editStatus = true
+          }
       }
     }
 </script>

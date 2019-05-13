@@ -24,7 +24,7 @@ export default new Vuex.Store({
           id: '3',
           'firstName': 'Elena',
           'lastName': 'Verteyko',
-          'country': 'Dubai',
+          'country': 'USA',
           selected: false,
         },
         {
@@ -63,16 +63,14 @@ export default new Vuex.Store({
       });
     },
     deleteAll(state) {
-      state.users.filter(user => user.selected === true).forEach(user => state.users.splice(state.users.indexOf(user), 1))
+      state.users.filter(user => user.selected === true).forEach(user =>
+      state.users.splice(state.users.indexOf(user), 1));
     },
     editForm(state) {
       state.addItem = false;
       state.modalForm = !state.modalForm;
       state.tableShow = !state.tableShow;
-    },
-    updateUser(state) {
-
-    },
+    }
   },
   actions: {
     openForm({commit}) {
@@ -99,9 +97,6 @@ export default new Vuex.Store({
     deleteAll({commit}) {
       commit('deleteAll');
     },
-    updateUser({commit},firstName, lastName, country, id) {
-
-    }
   },
   getters: {
     users(state) {
@@ -122,7 +117,7 @@ export default new Vuex.Store({
       }
     },
     addItem(state) {
-      return state.addItem
+      return state.addItem;
     }
     },
 });

@@ -49,7 +49,7 @@
                  @click="dublicate(index)"
                  >DUBLICATE</div>
                  <div class="btn changing__edit"
-                      @click="editForm()"
+                      @click="editForm(user)"
                  >EDIT</div>
                  <div class="btn changing__delete"
                  @click="removeUser(index)"
@@ -76,28 +76,34 @@
               <p class="settings__secondTitle">Accent Color: <input class="settings__color" type="color" v-model="bgColor"></p>
          </div>
        </div>
+      <NewUser :userEdit.sync="userEdit" v-if="modalForm"></NewUser>
     </div>
 
 </template>
 
 <script>
 
-
+import NewUser from '../components/NewUser';
 import {mapGetters} from 'vuex';
 import {mapActions} from 'vuex';
 
     export default {
         name: "Users",
+      components: {
+        NewUser,
+      },
       data() {
           return {
             search: '',
             changeTitle: '',
             bgColor: '#f14f5b',
             changeFont: '',
+            userEdit: {
+            }
           }
       },
       computed: {
-          ...mapGetters(['users','tableShow','addItem']),
+          ...mapGetters(['users','tableShow','addItem','modalForm']),
         title() {
           if( this.changeTitle === '') {
             return this.$store.getters.title;
@@ -121,6 +127,10 @@ import {mapActions} from 'vuex';
         dublicate(index) {
           let newAdd = this.$store.getters.users[index];
           this.$store.getters.users.push(newAdd)
+        },
+        editForm(user) {
+          this.userEdit = user
+          this.$store.dispatch('openForm');
         }
       }
     }
