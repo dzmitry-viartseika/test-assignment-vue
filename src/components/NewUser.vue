@@ -1,6 +1,6 @@
 <template>
-    <div id="new" >
-      <form class="form">
+    <div id="new">
+      <form class="form" v-on:keyup.esc="onSave()">
         <div class="form__title" v-if="Object.keys(this.userEdit).length === 0">
           Add User
         </div>
@@ -8,8 +8,8 @@
           Edit User
         </div>
         <div>
-          <p class="form__secondTitle">First Name</p>
-          <input class="input input__firstname" required v-model="user.firstName" type="text">
+          <p class="form__secondTitle" >First Name</p>
+          <input class="input input__firstname"  required v-model="user.firstName" type="text">
         </div>
         <p class="form__secondTitle">Last Name</p>
         <input class="input input__lastname" required v-model="user.lastName" type="text">
@@ -32,6 +32,7 @@
 
         </div>
       </form>
+    </div>
     </div>
 </template>
 
@@ -72,7 +73,7 @@ function getNewUser() {
         },
         onSave() {
           this.$store.dispatch('openForm');
-        }
+        },
       },
       beforeMount() {
           if (Object.keys(this.userEdit).length !== 0) {
