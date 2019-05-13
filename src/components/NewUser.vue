@@ -1,16 +1,18 @@
 <template>
     <div id="new" v-if="modalForm">
       <form class="form" @submit.prevent="onAddUser">
-        <div class="form__title">
-          Add/Edit User
+        <div class="form__title" v-if="addItem">
+          Add User
         </div>
-
+        <div class="form__title" v-else>
+          Edit User
+        </div>
         <div>
           <p class="form__secondTitle">First Name</p>
-          <input class="input" required v-model="user.firstName" type="text">
+          <input class="input input__firstname" required v-model="user.firstName" type="text">
         </div>
         <p class="form__secondTitle">Last Name</p>
-        <input class="input" required v-model="user.lastName" type="text">
+        <input class="input input__lastname" required v-model="user.lastName" type="text">
         <p class="form__secondTitle">Country:</p>
         <select required v-model="user.country" class="input input__selected">
           <option value="Belarus">Belarus</option>
@@ -19,8 +21,8 @@
           <option value="France">France</option>
         </select>
         <div class="submit">
-          <button type="submit" class="btn form__btn">ADD</button>
-          <button type="submit" class="btn form__btn">SAVE</button>
+          <button type="submit" class="btn form__btn" v-if="addItem">ADD</button>
+          <button type="submit" class="btn form__btn" v-else @click="updateUser()">SAVE</button>
 
         </div>
       </form>
@@ -50,13 +52,13 @@ function getNewUser() {
           user: getNewUser()
         }
       },
-      computed: mapGetters(['users','modalForm']),
+      computed: mapGetters(['users','modalForm','addItem']),
       methods: {
-        ...mapMutations(['addUser','openForm']),
+        ...mapMutations(['addUser','openForm','updateUser']),
         onAddUser() {
           this.user.id = this.$store.getters.users.length + 1;
           this.addUser(this.user);
-          this.user = getNewUser()
+          this.user = getNewUser();
         }
       }
     }
@@ -83,18 +85,19 @@ function getNewUser() {
     margin-left: 20px;
     height: 48px;
     border-radius: 4px;
+    padding-left: 10px;
     border: 1px solid #e4e4e4;
     background-color: #ffffff;
     color: #888888;
+    font-size: 18px;
     &__selected {
-      padding-left: 21px;
+      padding-left: 10px;
+      width: 340px;
     }
   }
 
 
-
   .form {
-
     &__title {
       height: 60px;
       border-radius: 5px 5px 0 0;
@@ -124,7 +127,6 @@ function getNewUser() {
       color: white;
     }
   }
-
 
 
 </style>

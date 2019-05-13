@@ -49,7 +49,7 @@
                  @click="dublicate(index)"
                  >DUBLICATE</div>
                  <div class="btn changing__edit"
-                      @click="openForm()"
+                      @click="editForm()"
                  >EDIT</div>
                  <div class="btn changing__delete"
                  @click="removeUser(index)"
@@ -97,7 +97,7 @@ import {mapActions} from 'vuex';
           }
       },
       computed: {
-          ...mapGetters(['users','tableShow']),
+          ...mapGetters(['users','tableShow','addItem']),
         title() {
           if( this.changeTitle === '') {
             return this.$store.getters.title;
@@ -114,7 +114,7 @@ import {mapActions} from 'vuex';
         }
       },
       methods: {
-          ...mapActions(['openForm','openForm2','onSearch','sortingUp','sortingDown','deleteAll']),
+          ...mapActions(['openForm','editForm','onSearch','sortingUp','sortingDown','deleteAll']),
         removeUser(index) {
           this.$store.getters.users.splice(index, 1);
         },

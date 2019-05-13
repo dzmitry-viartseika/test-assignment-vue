@@ -36,9 +36,9 @@ export default new Vuex.Store({
         }
       ],
     modalForm: false,
-    modalForm2: false,
     title: 'Users',
     tableShow: true,
+    addItem: false,
   },
   mutations: {
     addUser(state, user) {
@@ -48,11 +48,8 @@ export default new Vuex.Store({
 
     },
     openForm(state) {
+      state.addItem = true;
       state.modalForm = !state.modalForm;
-      state.tableShow = !state.tableShow;
-    },
-    openForm2(state) {
-      state.modalForm2 = !state.modalForm2;
       state.tableShow = !state.tableShow;
     },
     sortingUp(state) {
@@ -68,22 +65,21 @@ export default new Vuex.Store({
     deleteAll(state) {
       state.users.filter(user => user.selected === true).forEach(user => state.users.splice(state.users.indexOf(user), 1))
     },
-    updateUser(state, {firstName,lastName,country,id}) {
-      const user = state.users.find(a => {
-        console.log(id)
-        return a.id === id
-      });
-      user.firstName = firstName;
-      user.lastName = lastName;
-      user.country = country;
+    editForm(state) {
+      state.addItem = false;
+      state.modalForm = !state.modalForm;
+      state.tableShow = !state.tableShow;
+    },
+    updateUser(state) {
+
     },
   },
   actions: {
     openForm({commit}) {
       commit('openForm');
     },
-    openForm2({commit}) {
-      commit('openForm2');
+    editForm({commit}) {
+      commit('editForm');
     },
     dublicate({commit}) {
       commit('dublicate');
@@ -103,9 +99,9 @@ export default new Vuex.Store({
     deleteAll({commit}) {
       commit('deleteAll');
     },
-    updateUser({commit}, {firstName, lastName, country, id}) {
-      commit('updateUser');
-    },
+    updateUser({commit},firstName, lastName, country, id) {
+
+    }
   },
   getters: {
     users(state) {
@@ -113,9 +109,6 @@ export default new Vuex.Store({
     },
     modalForm(state) {
       return state.modalForm;
-    },
-    modalForm2(state) {
-      return state.modalForm2;
     },
     title(state) {
       return state.title;
@@ -125,8 +118,11 @@ export default new Vuex.Store({
     },
     userById(state) {
       return userId => {
-        return state.users.find(user => user.id === userId)
+        return state.users.find(user => user.id === userId);
       }
+    },
+    addItem(state) {
+      return state.addItem
     }
     },
 });

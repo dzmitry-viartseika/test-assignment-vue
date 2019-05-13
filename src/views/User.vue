@@ -15,6 +15,7 @@
       computed: {
         user() {
           const id = this.id;
+          console.log(this.id)
           return this.$store.getters.userById(id);
         }
       }
@@ -23,7 +24,6 @@
 
 <style scoped lang="less">
   .user {
-
     width: 380px;
     height: 444px;
     box-shadow: 0 1px 0 #e4e4e4;
